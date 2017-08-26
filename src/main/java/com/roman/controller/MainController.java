@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class MainController {
-
-
+    //TODO: add logger
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.ALL_VALUE)
     public ModelAndView handleRequestInternal(HttpServletRequest request,
                                               HttpServletResponse response) {
