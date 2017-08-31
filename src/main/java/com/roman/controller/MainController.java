@@ -11,18 +11,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 @Controller
 public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+    private static LinkedList<ArrayList<Boolean>> memoryLeak = new LinkedList<>();
 
     @RequestMapping(value = "/memory/fill", method = RequestMethod.POST)
     public String fillMemory(HttpServletRequest request,
                              HttpServletResponse response,
                              Model model) {
 
+        memoryLeak.add(new ArrayList<>(1024));
         return "memory";
-
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -32,24 +35,35 @@ public class MainController {
         return "welcome";
     }
 
-    @RequestMapping(value = "/sendError") //, method = RequestMethod.GET)
+    @RequestMapping(value = "/sendError", method = RequestMethod.GET)
     public String getError(Model model) {
         logger.debug("user press get error btn");
         throw new RuntimeException("'test exception'");
     }
 
     @RequestMapping(value = "/memory", method = RequestMethod.GET)
-    public String memory(HttpServletRequest request,
-                         HttpServletResponse response, Model model) {
+    public String memory(Model model) {
 
-        //TODO: return all memory of JVM(free/used) ;
+        // Get current size of heap in bytes
+        long heapSize = Runtime.getRuntime().totalMemory();
 
+        // Get maximum size of heap in bytes. The heap cannot grow beyond this size.
+        // Any attempt will result in an OutOfMemoryException.
+        long heapMaxSize = Runtime.getRuntime().maxMemory();
+
+        // Get amount of free memory within the heap in bytes. This size will increase // after garbage collection and decrease as new objects are created.
+        long heapFreeSize = Runtime.getRuntime().freeMemory();
+
+        model.addAttribute("heapSize",heapSize);
+        model.addAttribute("heaapMaxSize",heapMaxSize);
+        model.addAttribute("heapFreeSize",heapFreeSize);
         return "memory";
     }
 
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception ex, Model model) {
+
         logger.error("Request: " + req.getRequestURL() + " raised " + ex);
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("error", "Request: " + req.getRequestURL() + " raised " + ex);

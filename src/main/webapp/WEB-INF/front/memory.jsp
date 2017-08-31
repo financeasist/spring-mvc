@@ -1,41 +1,43 @@
 <%--
-  Created by roman.grupskyi
-  Date: 30.07.2017
+  @author Roma.Hrupskyi
+  @date: 31.08.2017
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <title>welcome</title>
+    <title>memory</title>
 </head>
 <body>
 <div class="container">
     <div class="alert alert-dark " style=" margin-top: 50px; ">
-        <h3 style="text-align: center;">Welcome in our test project!</h3>
+        <h3 style="text-align: center;">Size of heap memory</h3>
         <br/>
         <br/>
-        <div>
+        <div >
             <ol>
                 <li>
-                    <a class="btn btn-light" href="<spring:url value='/sendError'/>">Press to throw a new
-                        RuntimeException</a>
+                    <p>heap size: <c:out value="${heapSize/1000000}"/> MB</p>
                 </li>
 
                 <li>
-                    <a class="btn btn-light" href="<spring:url value='/memory'/>">Press to get a memory info</a>
+                    <p>heap max size: <c:out value="${heaapMaxSize/1000000}"/> MB</p>
                 </li>
 
                 <li>
-                    <form action="<spring:url value='/memory/fill'/>" method="post">
-                        <button type="submit" class="btn btn-light">Press to fill the memory</button>
-                    </form>
+                    <p>heap free size: <c:out value="${heapFreeSize/1000000}"/>MB</p>
                 </li>
             </ol>
         </div>
+        <br/>
+        <br/>
+        <a class="btn btn-light" href="<spring:url value='/'/>">Return</a>
     </div>
 </div>
 
@@ -51,3 +53,4 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
+l>
