@@ -25,7 +25,8 @@
         <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#demo" onclick="doPostRequest()">JSON
         </button>
         <div id="demo" class="collapse ">
-          <c:out value="${error}"/>
+            <br/>
+            <div id="log"></div>
         </div>
         <br/>
         <br/>
@@ -35,7 +36,19 @@
 </div>
 <script>
    function doPostRequest() {
+       var request = $.ajax({
+           url: "/sendError",
+           method: "GET",
+           headers: { 'accept': 'application/json' }
+       });
 
+       request.done(function( msg ) {
+           $( "#log" ).html(JSON.stringify(msg));
+       });
+
+       request.fail(function( jqXHR, textStatus ) {
+           alert( "Request failed: " + textStatus );
+       });
    }
 </script>
 </body>
