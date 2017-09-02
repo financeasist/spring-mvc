@@ -26,7 +26,7 @@
             </li>
 
             <li>
-                <p>heap max size: <c:out value="${heaapMaxSize/1000000}"/> MB</p>
+                <p>heap max size: <c:out value="${heapMaxSize/1000000}"/> MB</p>
             </li>
 
             <li>

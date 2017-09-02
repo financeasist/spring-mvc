@@ -20,6 +20,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Spring MVC Configuration.
+ * @author  Roman Grupskyi.
+ * @since 3/9/2017.
+ */
 @Configuration
 @ComponentScan(basePackages = "com.roman")
 @EnableWebMvc
