@@ -1,6 +1,7 @@
 package com.roman.config;
 
 import com.roman.config.resolvers.JsonViewResolver;
+import com.roman.interceptor.LoggingInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -82,6 +83,11 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoggingInterceptor()).addPathPatterns("/**");
+//        registry.addInterceptor(new TransactionInterceptor()).addPathPatterns("/person/save/*");
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
